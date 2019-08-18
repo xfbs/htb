@@ -30,4 +30,4 @@ nav:
     - Introduction: reversing/reversing.md
     - DSYM: reversing/dsym.md
     - Snake: reversing/snake.md
-
+    - Impossible Password: reversing/impossible_password.md
