@@ -8,10 +8,12 @@ repo_url: 'https://github.com/xfbs/htb'
 theme:
   name: 'material'
   palette:
-    primary: 'grey'
+    primary: 'blue grey'
     accent: 'blue'
   logo:
     icon: 'security'
+  feature:
+    tabs: true
 
 markdown_extensions:
   - extra
@@ -20,4 +22,11 @@ markdown_extensions:
       guess_lang: false
   - toc:
       permalink: true
+
+nav:
+  - Overview: index.md
+  - Invitation: invitation.md
+  - Reversing:
+    - Introduction: reversing/reversing.md
+    - DSYM: reversing/dsym.md
 
