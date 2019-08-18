@@ -85,4 +85,70 @@ routines that look to be promising: a `_start`, a `main`, a `notme`. But I
 don't know how to run it, or what the other file, `getme`, is supposed to do.
 
 I have the idea of trying to use `dunnoWhatIAm` as a library and trying to
-execute it like that.
+execute it like that. Or maybe trying to force loading it with `ld-linux`?
+
+Not knowing exactly what to do, I decided to load these files into Hopper and
+see what they look like.
+
+![dunnoWhatIAm in Hopper](dsym/dunno-hopper.png)
+
+The first one, `dunnoWhatIAm`, looks very strange. It has what seems to be an
+ELF header and some sections, but they don't contain any data, only NULL bytes.
+
+So next I took a look at the other one, again using Hopper. This time I found
+a lot more interesting things. There is actually code in here! And something
+that looks like it might be interesting.
+
+![getme in Hopper](dsym/getme-hopper.png)
+
+This part seems quite interesting. There is a string in there that indicates
+that this is something interesting:
+
+> You almost got me :D
+> Here is small price for you: 
+
+The only issue is, how do I manage to execute this to see what it really
+prints? I decide to patch the binary to jump to this code on startup and
+run it, to see what it does. I do that by patching in a `jmp` instruction
+to this routine, and then generating a new binary, `getme_mod`.
+
+![Patched main](dsym/getme-main.png)
+
+When I run this patched binary, it seems to give me what I want, where X is
+numbers and lowercase letters:
+
+    $ ./getme_mod
+    You almost got me :D
+    Here is a small price for you: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Now this is something interesting. That small price, it looks surprisingly
+like hex-encoded data. So next I try to hex-decode it, using a small Ruby script
+that looks like this, saved as `hexdecode.rb`.
+
+```ruby
+puts ARGV[0].scan(/../).map{|n| n.to_i(16).chr}.join
+```
+
+Running this with the target string gives me something that looks surprisingly
+like the kind of key I would be expecting.
+
+    ruby hexdecode.rb XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    UGO{xxx_xxxxxx_xxx_xx}
+
+But this doesn't seem to be quite right. It is supposed to look like `HTB{...}`.
+Is this once more obfuscated? Looking at the characters, it seems evident that
+it might be rot13-encoded, like the login token. So next I write a little Ruby
+script to rot13-decode it, saved as `rot13.rb`.
+
+```ruby
+require 'rot13'
+
+puts Rot13.rotate(ARGV[0])
+```
+
+Running this finally seems to give me the token I need.
+
+    ruby rot13.rb UGO{xxx_xxxxxx_xxx_xx}
+    HTB{xxx_xxxxxx_xxx_xx}
+
+Submitting this token was successful.
