@@ -1,0 +1,23 @@
+site_name: Hack the Box
+
+copyright: 'Copyright &copy; 2019 Patrick M. Elsen'
+
+repo_name: 'xfbs/htb'
+repo_url: 'https://github.com/xfbs/htb'
+
+theme:
+  name: 'material'
+  palette:
+    primary: 'grey'
+    accent: 'blue'
+  logo:
+    icon: 'security'
+
+markdown_extensions:
+  - extra
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+
