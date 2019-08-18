@@ -29,4 +29,5 @@ nav:
   - Reversing:
     - Introduction: reversing/reversing.md
     - DSYM: reversing/dsym.md
+    - Snake: reversing/snake.md
 

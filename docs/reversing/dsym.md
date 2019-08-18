@@ -152,3 +152,13 @@ Running this finally seems to give me the token I need.
     HTB{xxx_xxxxxx_xxx_xx}
 
 Submitting this token was successful.
+
+## Addendum
+
+After looking at what other people were doing online, I found out that the
+`dunnoWhatIAm` file is not entirely useless, but rather contains the debug info
+of the `getme` file. This is documented [here](https://sourceware.org/gdb/onlinedocs/gdb/Separate-Debug-Files.html).
+
+This is evident by the fact that the `dunnoWhatIAm` file is listed in the
+`.gnu_debuglink` section of `getme`. I could have used this to load the debug
+symols into `gdb`.
