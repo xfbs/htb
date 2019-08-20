@@ -26,8 +26,11 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - Invitation: invitation.md
-  - Reversing:
+  - Challenges:
     - Introduction: reversing/reversing.md
-    - DSYM: reversing/dsym.md
-    - Snake: reversing/snake.md
-    - Impossible Password: reversing/impossible_password.md
+    - Reversing:
+      - DSYM: reversing/dsym.md
+      - Snake: reversing/snake.md
+      - Impossible Password: reversing/impossible_password.md
+    - Web:
+      - Emdee five: emdee_five.md
